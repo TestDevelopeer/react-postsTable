@@ -5,9 +5,10 @@ const instance = axios.create({
 });
 
 export const postsAPI = {
-    getPosts(pageSettings, sortSettings) {
+    getPosts(pageSettings, sortSettings, searchText = '') {
         const {page, limit} = pageSettings;
         const {sort, order} = sortSettings;
-        return instance.get(`/posts?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`);
+        const searchQuery = searchText !== '' ? `&q=${searchText}` : '';
+        return instance.get(`/posts?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}${searchQuery}`);
     }
 }
