@@ -1,12 +1,12 @@
 import {put, takeEvery, call} from "redux-saga/effects"
 import {postsAPI} from '../api/api';
-import {ASYNC_GET_POSTS, setPosts} from "../redux/posts-reducer";
+import {ASYNC_GET_POSTS, setPostsAction} from "../redux/posts-reducer";
 
-const axiosPostsFromApi = () => postsAPI.getPosts();
+const axiosPostsFromApi = (pageSettings, sortSettings) => () => postsAPI.getPosts(pageSettings, sortSettings);
 
-function* postsWorker() {
-    const data = yield call(axiosPostsFromApi);
-    yield put(setPosts(data.data));
+function* postsWorker({pageSettings, sortSettings}) {
+    const data = yield call(axiosPostsFromApi(pageSettings, sortSettings));
+    yield put(setPostsAction(data.data, parseInt(data.headers['x-total-count'])));
 }
 
 export function* postsWatcher() {

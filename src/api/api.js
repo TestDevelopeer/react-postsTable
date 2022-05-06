@@ -5,7 +5,9 @@ const instance = axios.create({
 });
 
 export const postsAPI = {
-    getPosts() {
-        return instance.get(`/posts`);
+    getPosts(pageSettings, sortSettings) {
+        const {page, limit} = pageSettings;
+        const {sort, order} = sortSettings;
+        return instance.get(`/posts?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`);
     }
 }
