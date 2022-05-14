@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import Search from "./Search";
 import {connect} from "react-redux";
-import {setPageAction, setSearchAction} from "../../redux/table-reducer";
+import {setSearchAction} from "../../redux/table-reducer";
 import {useNavigate} from "react-router-dom";
 
-const SearchContainer = ({searchText, setSearchText, setPage}) => {
+const SearchContainer = ({searchText, setSearchText}) => {
     const [inputText, setInputText] = useState(searchText);
     const navigate = useNavigate();
     const handleSearch = () => {
@@ -31,10 +31,7 @@ let mapDispatchToProps = (dispatch) => {
     return {
         setSearchText: (text) => {
             dispatch(setSearchAction(text));
-        },
-        setPage: (page, limit) => {
-            dispatch(setPageAction(page, limit))
-        },
+        }
     }
 }
 

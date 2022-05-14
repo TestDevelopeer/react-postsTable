@@ -3,12 +3,16 @@ import {connect} from "react-redux";
 import {asyncPostsCreator, setPageAction, setSortAction} from "../../redux/table-reducer";
 import {useEffect} from "react";
 import {useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const PostsTableContainer = ({posts, pageSettings, sortSettings, searchText, getPosts, setPage, setSort}) => {
     let {pageNumber} = useParams();
     pageNumber = parseInt(pageNumber);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
+        if (!pageNumber) navigate("/1");
         if (pageSettings.page !== pageNumber) return setPage(pageNumber);
     }, [pageNumber]);
 
